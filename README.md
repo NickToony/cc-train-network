@@ -5,15 +5,11 @@ A collection of LUA scripts that combine to create a fully automated train netwo
 This is a rewrite of my original system, which I lost half the code for. This time the code will hopefully be better structured and easier to maintain. It's a work in progress, and **does not yet work**.
 
 ## Current Features
-Basic OS that updates itself, pulls down dependencies and responds to global commands.
-
-Networking layer that provides reliable communication
-
-Train pathfinding algorithm
-
-Holder funtionality
-
-More soon...
+*Basic OS that updates itself, pulls down dependencies and responds to global commands.
+*Networking layer that provides reliable communication
+*Train pathfinding algorithm
+*Holder funtionality
+*More soon...
 
 #Networking
 
