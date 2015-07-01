@@ -1,6 +1,6 @@
 # ComputerCraft Train Network
 
-A collection of LUA scripts that combine to create a fully automated train network. The intention is that users may request a train, set a location, and the train will calculate a route to that location while enforcing a block-based signaling system.
+A collection of LUA scripts that combine to create a fully automated train network in Minecraft, using ComputerCraft and RailCraft. The intention is that users may request a train, set a location, and the train will calculate a route to that location while enforcing a block-based signaling system.
 
 This is a rewrite of my original system, which I lost half the code for. This time the code will hopefully be better structured and easier to maintain. It's a work in progress, and **does not yet work**.
 
