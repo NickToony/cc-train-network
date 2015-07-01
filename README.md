@@ -4,14 +4,14 @@ A collection of LUA scripts that combine to create a fully automated train netwo
 
 This is a rewrite of my original system, which I lost half the code for. This time the code will hopefully be better structured and easier to maintain. It's a work in progress, and **does not yet work**.
 
-Current Features
+## Current Features
 Basic OS that updates itself, pulls down dependencies and responds to global commands.
 Networking layer that provides reliable communication
 Train pathfinding algorithm
 Holder funtionality
 More soon...
 
-Networking
+#Networking
 
 The networking API provided is an implementation of the Distance Vector algorithm for routing, and a TCP-inspired hand-shake for packet confirmation. This network layer deals with the two main issues with ComputerCraft wireless networking:
 
