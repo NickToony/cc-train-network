@@ -1,7 +1,7 @@
 --[[ SETUP ]]
 function setup()
     print("/-------------------/")
-    print("   Master Computer")
+    print("   Master Computer v2")
     print("---------------------")
     print("Detected type: " .. api_os.getType())
     print("Detected name: " .. api_os.getName())
