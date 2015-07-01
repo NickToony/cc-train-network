@@ -1,5 +1,6 @@
 dependencies = {}
 table.insert(dependencies, {os_constants.os_url("holder/main.lua"), "main", false})
+table.insert(dependencies, {os_constants.os_url("shared/api_slave.lua"), "api_slave", true})
 
 print("Preparing to update..")
 math.randomseed(os.time())

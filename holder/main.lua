@@ -5,9 +5,6 @@ SIDE_AVAILABLE = "right"
 TIMER_RELEASE_TRAIN = 5
 
 status = 0
-hasCreated = false
-controllerID = -1
-lastBroadcast = 0
 freedAt = 0
 
 --[[ SETUP ]]
@@ -35,39 +32,6 @@ function handleMessage(message)
     end
 end
 
-function handleCreateMessage(message)
-    -- This event occurs when the controller does not have us registered yet
-    -- So we should send a message and tell it our state
-    if message:getType() == "created" then
-        hasCreated = true
-        updateStatus()
-        print "Created"
-    end
-end
-
-function sendCreate()
-    if controllerID == -1 then
-        return
-    end
-
-    if math.abs(lastBroadcast - os.time()) < api_os.calcTime(10) then
-        return
-    end
-    lastBroadcast = os.time()
-
-    local inst_Message = api_net.Message.new()
-    inst_Message:setType("create")
-    inst_Message:setNetwork("default")
-    inst_Message:setSender(os.getComputerID())
-    inst_Message:setTarget(controllerID)
-
-    -- payload
-    inst_Message:addPayload(api_os.getType())
-    inst_Message:addPayload(api_os.getName())
-
-    inst_Message:send()
-end
-
 function update()
     local hasTrain = redstone.getInput(SIDE_TRAIN_PRESENT)
     if hasTrain then
@@ -86,7 +50,7 @@ end
 function updateStatus()
     print("STATUS WAS CHANGED: " .. status)
 
-    if controllerID == -1 then
+    if api_slave.hasCreated == false then
         return
     end
 
@@ -94,7 +58,7 @@ function updateStatus()
     inst_Message:setType(os_constants.MESSAGE_STATUS)
     inst_Message:setNetwork("default")
     inst_Message:setSender(os.getComputerID())
-    inst_Message:setTarget(controllerID)
+    inst_Message:setTarget(api_slave.controllerId)
 
     -- payload
     inst_Message:addPayload(status)
@@ -118,33 +82,17 @@ function main()
         if message == nil then
 
         else
-            if message:getType() == os_constants.MESSAGE_REBOOT then
-                message:broadcastAll()
-                api_net.handleStack()
-                os.reboot()
-            elseif message:getType() == os_constants.MESSAGE_HELLO then
-                print("master said hello!")
-            elseif message:getType() == os_constants.MESSAGE_CONTROL_ANNOUCE then
-                if controllerID == -1 or controllerID ~= tonumber(message:getSender()) then
-                    print("Detected controller: " .. message:getSender())
-                    hasCreated = false
-                end
-                controllerID = tonumber(message:getSender())
-            else
-                if hasCreated then
-                    handleMessage(message)
-                else
-                    handleCreateMessage(message)
-                end
+            handled = api_slave.handleMessage(message)
+            if handled == api_slave.MESSAGE_CREATED then
+                updateStatus()
+            elseif handled == api_slave.MESSAGE_UNHANDLED then
+                handleMessage(message)
             end
         end
 
         update()
 
-        if hasCreated == false then
-            -- Re-send the create message
-            sendCreate()
-        end
+        api_slave.step()
     end
 end
 
