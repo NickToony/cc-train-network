@@ -6,9 +6,13 @@ This is a rewrite of my original system, which I lost half the code for. This ti
 
 ## Current Features
 Basic OS that updates itself, pulls down dependencies and responds to global commands.
+
 Networking layer that provides reliable communication
+
 Train pathfinding algorithm
+
 Holder funtionality
+
 More soon...
 
 #Networking
